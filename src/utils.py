@@ -6,7 +6,8 @@ def reward_fn(prompts, completions, word, char, count, get_reward):
     rewards = []
     for completion, true_count in zip(completion_contents, count):
         pattern = r'oxed{(.*?)}'
-        numbers = [int(num) for num in re.findall(pattern, completion)]
+        numbers = [num for num in re.findall(pattern, completion)]
+        numbers = list(map(lambda x: int(x), filter(lambda x: x.isdigit(), numbers)))
         rewards.append(get_reward(numbers, true_count))
     
     return rewards

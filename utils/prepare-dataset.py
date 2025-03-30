@@ -8,15 +8,17 @@ from datasets import Dataset
 import numpy as np
 
 import nltk
-from nltk.corpus import words
+from nltk.corpus import brown
+from collections import Counter
 
-def get_words() -> list[str]:
-    try:
-        nltk.data.find('corpora/words')
-    except LookupError:
-        nltk.download('words')
-    return words.words()
+def get_words(k=10000) -> list[str]:
+    nltk.download('words')
+    nltk.download('brown')
 
+    word_freq = Counter(word.lower() for word in brown.words())
+    most_common_k = word_freq.most_common(k)
+    words = [word for word, _ in most_common_k if word.isalpha()]
+    return words
 
 def random_letter() -> str:
     return np.random.choice(list(ascii_lowercase)).item()
@@ -85,7 +87,7 @@ def main():
 
     words = get_words()
     np.random.shuffle(words)
-    split_idx = len(words) // 2
+    split_idx = int(len(words) * 0.8)
 
     train_dataset = build_dataset(
         words[:split_idx],
