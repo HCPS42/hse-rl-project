@@ -1,0 +1,5 @@
+temperature: 0.9
+top_p: 0.95
+top_k: null
+min_p: null
+repetition_penalty: 1.0

@@ -1,0 +1,2 @@
+_target_: "src.dataset.get_dataset"
+path: "data/test.parquet"

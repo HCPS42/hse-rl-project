@@ -1,0 +1,2 @@
+_target_: src.model.get_model
+name: "Qwen/Qwen2.5-0.5B-Instruct"

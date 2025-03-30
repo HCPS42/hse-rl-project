@@ -1,0 +1,8 @@
+defaults:
+  - dataset: test
+  - sampling: sampling
+  - model: pretrained
+batch_size: 16
+
+seed: 0
+

@@ -1,0 +1,56 @@
+# GRPO args
+max_prompt_length: 512
+num_generations: 8
+max_completion_length: 256
+ds3_gather_for_generation: true   # gather full weights for generation
+
+# sampling args
+temperature: ${sampling.temperature}
+top_p: ${sampling.top_p}
+top_k: ${sampling.top_k}
+min_p: ${sampling.min_p}
+repetition_penalty: ${sampling.repetition_penalty}
+cache_implementation: null   # when use_vllm is false
+
+# vllm args
+use_vllm: true
+
+# training args
+## GRPO
+learning_rate: 1e-6
+beta: 0.04           # KL penalty
+num_iterations: 1
+epsilon: 0.2         # eps in objective
+epsilon_high: 0.2
+scale_rewards: false
+
+## other
+do_train: true
+do_eval: false
+per_device_train_batch_size: 8
+max_steps: 10000
+warmup_steps: 100
+gradient_accumulation_steps: 1
+bf16: true
+gradient_checkpointing: false
+gradient_checkpointing_kwargs:
+  - use_reentrant: false
+
+# logging args
+log_completions: true
+logging_strategy: steps
+logging_steps: 1
+report_to:
+  - wandb
+
+# saving args
+run_name: grpo
+output_dir: saved
+overwrite_output_dir: false
+save_strategy: steps
+save_steps: 100
+save_total_limit: 3
+save_only_model: true
+
+seed: ${seed}
+data_seed: ${seed}

@@ -1,0 +1,11 @@
+defaults:
+  - dataset: train
+  - sampling: sampling
+  - model: qwen-0.5b
+  - trainer: grpo
+reward_fn:
+  _target_: src.utils.get_reward_fn
+  name: binary
+
+seed: 0
+

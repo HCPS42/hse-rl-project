@@ -1,0 +1,2 @@
+_target_: src.model.get_vllm_model
+path: null   # replace with the model path
