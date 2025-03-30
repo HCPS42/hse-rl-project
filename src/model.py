@@ -16,7 +16,6 @@ def get_vllm_model(path: str):
         model=path,
         dtype="half",
         gpu_memory_utilization=0.9,
-        max_model_len=512,
         trust_remote_code=True,
         tensor_parallel_size=1,
     )
