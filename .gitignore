@@ -1,4 +1,6 @@
 .venv
 .env
 *.pyc
-data
+data/
+outputs/
+wandb/

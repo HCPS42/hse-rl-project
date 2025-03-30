@@ -3,6 +3,7 @@ defaults:
   - sampling: sampling
   - model: qwen-0.5b
   - trainer: grpo
+  - _self_
 reward_fn:
   _target_: src.utils.get_reward_fn
   name: binary

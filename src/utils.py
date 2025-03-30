@@ -1,30 +1,33 @@
 import re
 
-def binary_reward_fn(prompts, completions, word, char, count):
-    rewards = []
-    for completion, true_count in zip(completions, count):
-        numbers = [int(num) for num in re.findall(r'\d+', completion)]
 
-        if len(numbers) == 1:
-            reward = (numbers[0] == true_count)
-        else:
-            reward = 0
-        rewards.append(float(reward))
+def reward_fn(prompts, completions, word, char, count, get_reward):
+    completion_contents = [completion[0]["content"] for completion in completions]
+    rewards = []
+    for completion, true_count in zip(completion_contents, count):
+        pattern = r'oxed{(.*?)}'
+        numbers = [int(num) for num in re.findall(pattern, completion)]
+        rewards.append(get_reward(numbers, true_count))
     
     return rewards
+
+def binary_reward_fn(prompts, completions, word, char, count):
+    def get_reward(numbers, true_count):
+        if len(numbers) == 1:
+            return float(numbers[0] == true_count)
+        else:
+            return 0
+
+    return reward_fn(prompts, completions, word, char, count, get_reward)
 
 def abs_reward_fn(prompts, completions, word, char, count):
-    rewards = []
-    for completion, true_count in zip(completions, count):
-        numbers = [int(num) for num in re.findall(r'\d+', completion)]
-
+    def get_reward(numbers, true_count):
         if len(numbers) == 1:
-            reward = -abs(numbers[0] - true_count)
+            return -abs(numbers[0] - true_count)
         else:
-            reward = -10
-        rewards.append(float(reward))
-    
-    return rewards
+            return -10
+
+    return reward_fn(prompts, completions, word, char, count, get_reward)
 
 def get_reward_fn(name):
     if name == "binary":

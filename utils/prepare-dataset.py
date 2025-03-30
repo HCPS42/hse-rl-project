@@ -57,7 +57,10 @@ def build_dataset(
         idx += 1
 
         dataset.append({
-            "prompt": template.format(word=word, char=char),
+            "prompt": [
+                {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant. You should think step by step. Return the final answer within \\boxed{}."},
+                {"role": "user", "content": template.format(word=word, char=char)}
+            ],
             "word": word,
             "char": char,
             "count": count
